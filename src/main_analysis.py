@@ -271,9 +271,95 @@ class MainAnalysisPipeline:
             print("\n❌ Step 5 амжилтгүй боллоо. Зогслоо.")
             return False
 
+        # Алхам 6: ML Analysis (optional)
+        self.step_6_ml_analysis()
+
+        # Алхам 7: Interactive Dashboard
+        self.step_7_dashboard()
+
+        # Алхам 8: HTML Report
+        self.step_8_report()
+
         # Амжилттай дууслаа
         self.print_summary()
         return True
+
+    def step_6_ml_analysis(self) -> bool:
+        """
+        Алхам 6: Machine Learning шинжилгээ (Optional)
+        """
+        print("\n" + "─"*70)
+        print("🤖 STEP 6/8: Machine Learning Analysis (Optional)")
+        print("─"*70)
+
+        try:
+            import importlib.util
+            spec = importlib.util.spec_from_file_location("ml_analysis", Path(__file__).parent / "7_ml_analysis.py")
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            MLAnalyzer = module.MLAnalyzer
+
+            analyzer = MLAnalyzer()
+            results = analyzer.run_analysis()
+            analyzer.save_results()
+            analyzer.print_summary()
+
+            print("\n✅ Step 6 амжилттай дууслаа!")
+            return True
+
+        except Exception as e:
+            print(f"\n⚠ ML шинжилгээ алгасагдлаа: {e}")
+            return True  # Continue anyway
+
+    def step_7_dashboard(self) -> bool:
+        """
+        Алхам 7: Interactive Dashboard үүсгэх
+        """
+        print("\n" + "─"*70)
+        print("🌐 STEP 7/8: Interactive Dashboard")
+        print("─"*70)
+
+        try:
+            import importlib.util
+            spec = importlib.util.spec_from_file_location("dashboard", Path(__file__).parent / "8_interactive_dashboard.py")
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            InteractiveDashboard = module.InteractiveDashboard
+
+            dashboard = InteractiveDashboard()
+            dashboard.create_dashboard()
+
+            print("\n✅ Step 7 амжилттай дууслаа!")
+            return True
+
+        except Exception as e:
+            print(f"\n⚠ Dashboard алгасагдлаа: {e}")
+            return True
+
+    def step_8_report(self) -> bool:
+        """
+        Алхам 8: HTML тайлан үүсгэх
+        """
+        print("\n" + "─"*70)
+        print("📝 STEP 8/8: HTML Report Generation")
+        print("─"*70)
+
+        try:
+            import importlib.util
+            spec = importlib.util.spec_from_file_location("report", Path(__file__).parent / "9_report_generator.py")
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            ReportGenerator = module.ReportGenerator
+
+            generator = ReportGenerator()
+            generator.generate_report()
+
+            print("\n✅ Step 8 амжилттай дууслаа!")
+            return True
+
+        except Exception as e:
+            print(f"\n⚠ Тайлан алгасагдлаа: {e}")
+            return True
 
     def print_summary(self) -> None:
         """Эцсийн хураангуй"""
@@ -291,11 +377,18 @@ class MainAnalysisPipeline:
         print("   - data/processed/world_disasters.csv")
         print("   - data/processed/matched_events.csv")
         print("   - results/reports/statistical_results.json")
+        print("   - results/reports/ml_results.json")
+        print("   - results/reports/final_report.html")
         print("   - results/visualizations/comprehensive_analysis.png")
+        print("   - results/visualizations/interactive_dashboard.html")
         print("   - results/visualizations/*.png")
         print("\n💡 Дараагийн алхам:")
-        print("   Visualization-уудыг нээж үзнэ үү:")
-        print("   open results/visualizations/comprehensive_analysis.png")
+        print("   1. Visualization-уудыг нээх:")
+        print("      open results/visualizations/comprehensive_analysis.png")
+        print("   2. Interactive dashboard:")
+        print("      open results/visualizations/interactive_dashboard.html")
+        print("   3. HTML тайлан:")
+        print("      open results/reports/final_report.html")
         print("="*70 + "\n")
 
 
